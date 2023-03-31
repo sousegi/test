@@ -55,3 +55,13 @@ Route::namespace('App\\Http\\Controllers\\Admin')->prefix('admin')->middleware('
     Route::get('cache', 'DashboardController@cache')->name('cache');
     Route::get('maintenance', 'DashboardController@maintenance')->name('maintenance');
 });
+
+Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->middleware('admin')->as('admin.')->group(function () {
+    Route::get('products', 'ProductController@index')->name('products.index');
+    Route::get('products/create', 'ProductController@create')->name('products.create');
+    Route::get('products/edit/{id}', 'ProductController@edit')->name('products.edit');
+    Route::delete('products/destroy/{id}', 'ProductController@destroy')->name('products.destroy');
+    Route::post('products/store', 'ProductController@store')->name('products.store');
+    Route::put('products/update/{id}', 'ProductController@update')->name('products.update');
+    Route::post('products/api/publish', 'ProductController@publish')->name('products.publish');
+});
