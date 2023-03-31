@@ -20,7 +20,7 @@
 {{--        @endforeach--}}
 
         <x-admin.dashboard.nav.nav-li
-            :href="route('admin.products')"
+            :href="route('admin.products.index')"
             :active="setActive('admin/products*')"
             :icon="'si si-speedometer'"
             :title="'Products'" />
