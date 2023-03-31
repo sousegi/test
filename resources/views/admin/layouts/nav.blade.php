@@ -10,14 +10,22 @@
                 :icon="'si si-speedometer'"
                 :title="'Dashboard'" />
 
-        @foreach($modules as $module)
-            <x-admin.dashboard.nav.nav-li
-                    :href="'/admin/' . $module->name"
-                    :active="setActive('admin/' . $module->name . '*')"
-                    :icon="$module->icon"
-                    :title="$module->title ?? $module->name"
-            />
-        @endforeach
+{{--        @foreach($modules as $module)--}}
+{{--            <x-admin.dashboard.nav.nav-li--}}
+{{--                    :href="'/admin/' . $module->name"--}}
+{{--                    :active="setActive('admin/' . $module->name . '*')"--}}
+{{--                    :icon="$module->icon"--}}
+{{--                    :title="$module->title ?? $module->name"--}}
+{{--            />--}}
+{{--        @endforeach--}}
+
+        <x-admin.dashboard.nav.nav-li
+            :href="route('admin.products')"
+            :active="setActive('admin/products*')"
+            :icon="'si si-speedometer'"
+            :title="'Products'" />
+
+
 
         <x-admin.dashboard.nav.nav-menu
                 :title="'Settings'"
