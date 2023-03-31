@@ -37,13 +37,13 @@
 
             <x-admin.dashboard.tablist.tab-pane :target="'social-media'" :active="(int) $tab === 3">
                 {!! form_until($form, 'site.cover.image') !!}
-                @if(!is_null($settings['site.cover.image']))
-                    <div class="form-group">
-                        <div class="options-container">
-                            <img src="{{ asset($settings['site.cover.image']) }}" alt="favicon" class="img-fluid">
-                        </div>
-                    </div>
-                @endif
+{{--                @if(!is_null($settings['site.cover.image']))--}}
+{{--                    <div class="form-group">--}}
+{{--                        <div class="options-container">--}}
+{{--                            <img src="{{ asset($settings['site.cover.image']) }}" alt="favicon" class="img-fluid">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endif--}}
             </x-admin.dashboard.tablist.tab-pane>
 
             <x-admin.dashboard.tablist.tab-pane :target="'embedded'" :active="(int) $tab === 4">
