@@ -25,6 +25,12 @@
             :icon="'si si-speedometer'"
             :title="'Products'" />
 
+        <x-admin.dashboard.nav.nav-li
+            :href="route('admin.users.index')"
+            :active="setActive('admin/users*')"
+            :icon="'si si-user'"
+            :title="'Users'" />
+
 
 
         <x-admin.dashboard.nav.nav-menu
