@@ -50,7 +50,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $token = $user->createToken('rememberToken')->plainTextToken;
+        $token = $user->createToken('api_token')->plainTextToken;
 
         return response()->json(['token' => $token], 201);
     }
@@ -69,7 +69,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            $token = Auth::user()->createToken('rememberToken')->plainTextToken;
+            $token = Auth::user()->createToken('api_token')->plainTextToken;
             return response()->json(['token' => $token], 200);
         } else {
             return response()->json(['error' => 'Invalid email or password'], 401);
