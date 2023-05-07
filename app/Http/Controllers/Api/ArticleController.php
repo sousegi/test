@@ -36,10 +36,9 @@ class ArticleController extends Controller
         $articles = Article::select(['id', 'title', 'content', 'created_at'])->get()
             ->map(function($articles) {
             return [
-                'id' => $articles->id,
                 'title' => $articles->title,
                 'content' => $articles->content,
-                'createdAt' => $articles->created_at,
+                'created_at' => $articles->created_at,
             ];
         });
 
