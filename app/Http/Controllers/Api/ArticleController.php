@@ -18,35 +18,22 @@ class ArticleController extends Controller
     /**
      * @var \App\Services\ArticleService
      */
-    private ArticleService $service;
+    private ArticleService $articleService;
 
-    /**
-     * @param  \App\Services\ArticleService $service
-     */
-    public function __construct(ArticleService $service)
+    public function __construct(ArticleService $articleService)
     {
-        $this->service = $service;
+        $this->service = $articleService;
     }
 
     /**
      * @return JsonResponse
      */
 
-    public function show() {
-        $articles = Article::select(['id', 'title', 'content', 'created_at'])->get()
-            ->map(function($articles) {
-            return [
-                'title' => $articles->title,
-                'content' => $articles->content,
-                'created_at' => $articles->created_at,
-            ];
-        });
+    public function show(): JsonResponse
+    {
+        $articles = Article::select(['id', 'title', 'content', 'created_at'])->get();
 
         try {
-
-            if (!$articles->count()) {
-                return response()->json(['message' => 'Empty Articles'], 401);
-            }
 
             return response()->json(['articles' => $articles], 200);
         } catch (Exception $e) {
