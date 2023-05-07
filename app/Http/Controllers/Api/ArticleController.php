@@ -31,7 +31,14 @@ class ArticleController extends Controller
 
     public function show(): JsonResponse
     {
-        $articles = Article::select(['id', 'title', 'content', 'created_at'])->get();
+        $articles = Article::select(['id', 'title', 'content', 'created_at'])->get()
+            ->map(function($articles) {
+            return [
+                'title' => $articles->title,
+                'content' => $articles->content,
+                'created_at' => $articles->created_at,
+            ];
+        });
 
         try {
 
