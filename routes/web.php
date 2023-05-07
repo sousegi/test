@@ -75,3 +75,13 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->middleware('adm
     Route::put('users/update/{id}', 'UserController@update')->name('users.update');
     Route::post('users/api/publish', 'UserController@publish')->name('users.publish');
 });
+
+Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->middleware('admin')->as('admin.')->group(function () {
+    Route::get('articles', 'ArticleController@index')->name('articles.index');
+    Route::get('articles/create', 'ArticleController@create')->name('articles.create');
+    Route::get('articles/edit/{id}', 'ArticleController@edit')->name('articles.edit');
+    Route::delete('articles/destroy/{id}', 'ArticleController@destroy')->name('articles.destroy');
+    Route::post('articles/store', 'ArticleController@store')->name('articles.store');
+    Route::put('articles/update/{id}', 'ArticleController@update')->name('articles.update');
+    Route::post('articles/api/publish', 'ArticleController@publish')->name('articles.publish');
+});
