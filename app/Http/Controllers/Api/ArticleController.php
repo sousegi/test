@@ -31,12 +31,7 @@ class ArticleController extends Controller
 
     public function show(): JsonResponse
     {
-        $date = date('Y-m-d');
-        $articles = Article::select('id', 'title', 'content')->get();
-        return response()->json([
-            'articles' => $articles,
-            'created_at' => $date,
-        ]);
+        $articles = Article::select('id', 'title', 'content', 'created_at')->get();
+        return response()->json($articles);
     }
 }
-
