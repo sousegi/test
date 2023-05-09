@@ -34,4 +34,10 @@ class ArticleController extends Controller
         $articles = Article::select('id', 'title', 'content', 'created_at')->get();
         return response()->json($articles);
     }
+
+    public function article ($id)
+    {
+        $article = Article::find($id);
+        return response()->json($article);
+    }
 }
