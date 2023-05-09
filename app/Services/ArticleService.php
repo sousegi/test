@@ -122,4 +122,24 @@ class ArticleService implements Service
     {
         $this->builder()->where('id', $id)->delete();
     }
+
+    /**
+     * @return Builder[]|Collection|\Illuminate\Support\Collection
+     */
+    public function getAllArticles(): Collection|\Illuminate\Support\Collection|array
+    {
+        return $this->builder()
+            ->select(['id', 'title', 'content', 'image', 'created_at'])
+            ->get()
+            ->map(function($articles) {
+                return [
+                    'id' => $articles->id,
+                    'title' => $articles->title,
+                    'content' => $articles->content,
+                    'image' => url('/storage/articles/'.$articles->id.'/'.$articles->image),
+                    'created_at' => $articles->created_at
+                ];
+            });
+    }
+
 }

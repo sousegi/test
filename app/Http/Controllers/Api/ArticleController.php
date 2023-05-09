@@ -2,42 +2,59 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+
+use App\Http\Resources\ArticlesCollection;
 use App\Models\Article;
 use App\Services\ArticleService;
-use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 
-/**
- * @property $ArticleService
- */
-class ArticleController extends Controller
+class ArticleController extends APIController
 {
     /**
-     * @var \App\Services\ArticleService
+     * @var ArticleService
      */
     private ArticleService $articleService;
 
     public function __construct(ArticleService $articleService)
     {
-        $this->service = $articleService;
+        $this->articleService = $articleService;
     }
+
+//    /**
+//     * @return JsonResponse
+//     */
+//
+//    public function show(): JsonResponse
+//    {
+//        $articles = Article::select('id', 'title', 'content', 'created_at')->get();
+//        return response()->json($articles);
+//    }
 
     /**
      * @return JsonResponse
      */
-
     public function show(): JsonResponse
     {
-        $articles = Article::select('id', 'title', 'content', 'created_at', 'image')->get();
-        return response()->json($articles);
+        try {
+            $collection = $this->articleService->getAllArticles();
+            if (!$collection->count()) {
+                return response()->json(['message' => 'Empty Categories'], 422);
+            }
+
+
+            return $this->response200((new ArticlesCollection(resource: $collection))->resolve());
+        } catch (Exception $e) {
+            return $this->response500($e);
+        }
     }
 
-    public function article ($id)
+    public function article($id)
     {
         $article = Article::find($id);
         return response()->json($article);
     }
+
 }
