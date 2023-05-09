@@ -85,3 +85,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->middleware('adm
     Route::put('articles/update/{id}', 'ArticleController@update')->name('articles.update');
     Route::post('articles/api/publish', 'ArticleController@publish')->name('articles.publish');
 });
+
+Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->middleware(['admin'])->as('amigo.')->group(function () {
+    Route::post('dropzone/image', 'DropZoneImageController@storeMedia')->name('dropzone.storeMedia');
+    Route::post('dropzone/delete-file', 'DropZoneImageController@deleteFile')->name('dropzone.deleteFile');
+});

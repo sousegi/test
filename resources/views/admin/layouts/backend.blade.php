@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" id="css-main" href="{{ asset('/css/oneui.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
 
     @yield('css_after')
 
@@ -66,6 +67,7 @@
     <script src="{{ asset('js/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
     <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('js/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 
     <!-- OneUI Core JS -->
     <script src="{{ asset('js/oneui.app.js') }}"></script>

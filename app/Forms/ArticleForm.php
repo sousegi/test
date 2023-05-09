@@ -35,14 +35,29 @@ class ArticleForm extends Form
 //                'rules' => ['required', 'string', 'max:80'],
 //            ]);
 //        }
-//        $this
-//            ->add('title', Field::TEXT, [
-//                'rules' => ['required', 'string', 'max:10'],
-//            ])
-//            ->add('published', Field::CHECKBOX, [
-//                'label' => 'Publish',
-//                'rules' => ['boolean']
-//            ]);
+        $this
+            ->add('title', Field::TEXT, [
+                'rules' => ['required', 'string'],
+                'value' => $this->model ? $this->model->title : '',
+            ])
+            ->add('content', Field::TEXTAREA, [
+                'rules' => ['required', 'string'],
+                'attr' => [
+                    'class' => 'ckeditor',
+
+                ],
+
+            ])
+            ->add('published', Field::CHECKBOX, [
+                'label' => 'Publish',
+                'rules' => ['boolean']
+            ]);
         $this->add('delimiter', 'hidden');
+        $this->add('image', Field::FILE, [
+            'label' => false,
+            'attr' => [
+                'hidden' => 'hidden'
+            ],
+        ]);
     }
 }

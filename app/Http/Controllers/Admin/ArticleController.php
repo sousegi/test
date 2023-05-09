@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Forms\ArticleForm;
 use App\Services\ArticleService;
 use App\Services\LanguageService;
+use App\Traits\DropZoneTrait;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +20,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
  */
 class ArticleController extends Controller
 {
-    use FormBuilderTrait;
+    use FormBuilderTrait, DropZoneTrait;
 
     /**
      * @var \App\Services\ArticleService
@@ -75,6 +76,10 @@ class ArticleController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $form = $this->form(ArticleForm::class);
+        if (request('image') == null ) {
+            return redirect()->back()->with('error','Image Required!')->withInput();
+        }
+
         $form->redirectIfNotValid();
 
         $status = $this->service->store(
@@ -108,10 +113,13 @@ class ArticleController extends Controller
         ]);
         $languages = app(LanguageService::class)->getLanguagesForDashboard();
 
+        $image = !empty($resource->image) ? $this->getImages($resource->image, $resource->id) : null;
+
         return view('admin.articles.form')->with([
             'resource' => $resource,
             'form' => $form,
             'languages' => $languages,
+            'image' => $image,
         ]);
     }
 

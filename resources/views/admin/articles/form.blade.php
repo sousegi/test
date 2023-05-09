@@ -41,13 +41,29 @@
         {!! form_start($form) !!}
 
         <x-admin.layouts.block-content>
-            <x-admin.layouts.validation-warning />
 
             {!! form_until($form, 'delimiter') !!}
         </x-admin.layouts.block-content>
 
         <x-admin.dashboard.buttons.save-buttons-target />
-
-        {!! form_end($form, false); !!}<!-- Form End -->
+        <div id="imagesArr" data-images="{{$image ?? '{}'}}"></div>
+        <div class="col-12 border-r">
+            <div class="form-group row">
+                <div class="col-xl-12 col-md-10">
+                    <div class="options-container d-flex align-items-center justify-content-center image-container">
+                        <div class="form-group text-center">
+                            <label class="mb-3 form-label required">Image</label>
+                            <div class="needsclick dropzone" id="slider-dropzone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </x-admin.layouts.block>
+        {!! form_end($form, false); !!}<!-- Form End -->
+
+@endsection
+@section('js_after')
+    @include('admin.dropzone.script')
 @endsection

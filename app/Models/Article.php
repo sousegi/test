@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\DropZoneTrait;
 use App\Traits\Uploadable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +14,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Article extends Model
 {
-    use Uploadable, HasTranslations;
+    use DropZoneTrait, HasTranslations;
 
     /**
      * The table associated with the model.
@@ -57,7 +58,10 @@ class Article extends Model
      */
     protected $fillable = [
         // Write down the fields that will be assignable
-        // 'published',
+         'published',
+        'title',
+        'content',
+        'image',
     ];
 
     /**
@@ -86,6 +90,7 @@ class Article extends Model
      */
     protected $uploadable = [
         // Write down the fields that will be resolved as file inputs.
+        'image',
     ];
 
     /**

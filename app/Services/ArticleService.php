@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\Service;
 use App\Models\Article;
+use App\Traits\DropZoneTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,8 @@ use TypeError;
  */
 class ArticleService implements Service
 {
+    use DropZoneTrait;
+
     /**
      * @var \App\Models\Article
      */
@@ -73,7 +76,12 @@ class ArticleService implements Service
     public function store(array $params): bool
     {
         $this->model->fill($params);
-        return $this->model->save();
+        $store = $this->model->save();
+
+        if (request()->has('image')) {
+            self::moveImage(request()->image);
+        }
+        return $store;
     }
 
     /**
@@ -101,6 +109,9 @@ class ArticleService implements Service
         }
 
         $this->model = $model;
+        if (request()->has('image')) {
+            self::moveImage(request()->image);
+        }
         return $this->model->update($params);
     }
 
