@@ -130,6 +130,7 @@ class ArticleService implements Service
     {
         return $this->builder()
             ->select(['id', 'title', 'content', 'image', 'created_at'])
+            ->where('published' , 1)
             ->get()
             ->map(function($articles) {
                 return [
