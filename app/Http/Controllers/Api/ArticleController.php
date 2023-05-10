@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Http\Resources\ArticleResource;
 use App\Http\Resources\ArticlesCollection;
 use App\Models\Article;
 use App\Services\ArticleService;
@@ -54,7 +55,7 @@ class ArticleController extends APIController
     public function article($id)
     {
         $article = Article::find($id);
-        return response()->json($article);
+        return response()->json(new ArticleResource($article));
     }
 
 }
