@@ -97,6 +97,4 @@ class AuthController extends APIController
             return $this->response500($th);
         }
     }
-
-
 }
