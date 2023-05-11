@@ -24,16 +24,6 @@ class ArticleController extends APIController
         $this->articleService = $articleService;
     }
 
-//    /**
-//     * @return JsonResponse
-//     */
-//
-//    public function show(): JsonResponse
-//    {
-//        $articles = Article::select('id', 'title', 'content', 'created_at')->get();
-//        return response()->json($articles);
-//    }
-
     /**
      * @return JsonResponse
      */
@@ -42,7 +32,7 @@ class ArticleController extends APIController
         try {
             $collection = $this->articleService->getAllArticles();
             if (!$collection->count()) {
-                return response()->json(['message' => 'Empty Categories'], 422);
+                return response()->json(['message' => 'Empty Articles'], 422);
             }
 
 
@@ -52,10 +42,20 @@ class ArticleController extends APIController
         }
     }
 
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
     public function article($id)
     {
         $article = Article::find($id);
-        return response()->json(new ArticleResource($article));
+
+        try {
+
+            return $this->response200((new ArticleResource($article))->resolve());
+        } catch (Exception $e) {
+            return $this->response500($e);
+        }
     }
 
 }
