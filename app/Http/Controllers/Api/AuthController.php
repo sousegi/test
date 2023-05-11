@@ -78,25 +78,26 @@ class AuthController extends APIController
         }
     }
 
-    public function logoutUser(Request $request): JsonResponse
-    {
-        if (PersonalAccessToken::findToken($request->bearerToken())->forceDelete()) {
-            return response()->json(['success' => true]);
-        }
-        return response()->json(['success' => false]);
-    }
-}
 //    public function logoutUser(Request $request): JsonResponse
 //    {
-//        try {
-//
-//            PersonalAccessToken::findToken($request->bearerToken())->delete();
-//            return response()->json([
-//                'status'  => true,
-//                'message' => __(key: 'User Logged Out Successfully.'),
-//            ], status: Response::HTTP_OK);
-//        } catch (\Throwable $th) {
-//            return $this->response500($th);
+//        if (PersonalAccessToken::findToken($request->bearerToken())->forceDelete()) {
+//            return response()->json(['success' => true]);
 //        }
+//        return response()->json(['success' => false]);
 //    }
 //}
+
+    public function logoutUser(Request $request): JsonResponse
+    {
+        try {
+
+            PersonalAccessToken::findToken($request->bearerToken())->delete();
+            return response()->json([
+                'status'  => true,
+                'message' => __(key: 'User Logged Out Successfully.'),
+            ], status: Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return $this->response500($th);
+        }
+    }
+}
