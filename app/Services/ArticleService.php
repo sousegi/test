@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\Service;
 use App\Models\Article;
 use App\Traits\DropZoneTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -138,7 +139,8 @@ class ArticleService implements Service
                     'title' => $articles->title,
                     'content' => $articles->content,
                     'image' => url('/storage/articles/'.$articles->id.'/'.$articles->image),
-                    'created_at' => $articles->created_at
+                    'created_at' => Carbon::parse($articles->created_at)->format('d-m-Y'),
+
                 ];
             });
     }
