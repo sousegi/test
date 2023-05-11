@@ -28,11 +28,13 @@ class AuthController extends APIController
      */
     private UserService $userService;
 
-    public function __construct(UserService $userService) {
+    public function __construct(UserService $userService)
+    {
         $this->userService = $userService;
     }
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -41,7 +43,7 @@ class AuthController extends APIController
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()], 422);
         }
 
         $user = User::create([
@@ -76,25 +78,25 @@ class AuthController extends APIController
         }
     }
 
-//    public function logoutUser(Request $request): JsonResponse
-//    {
-//        if (PersonalAccessToken::findToken($request->bearerToken())->forceDelete()) {
-//            return response()->json(['success' => true]);
-//        }
-//        return response()->json(['success' => false]);
-//    }
-
     public function logoutUser(Request $request): JsonResponse
     {
-        try {
-
-            PersonalAccessToken::findToken($request->bearerToken())->delete();
-            return response()->json([
-                'status'  => true,
-                'message' => __(key: 'User Logged Out Successfully.'),
-            ], status: Response::HTTP_OK);
-        } catch (\Throwable $th) {
-            return $this->response500($th);
+        if (PersonalAccessToken::findToken($request->bearerToken())->forceDelete()) {
+            return response()->json(['success' => true]);
         }
+        return response()->json(['success' => false]);
     }
 }
+//    public function logoutUser(Request $request): JsonResponse
+//    {
+//        try {
+//
+//            PersonalAccessToken::findToken($request->bearerToken())->delete();
+//            return response()->json([
+//                'status'  => true,
+//                'message' => __(key: 'User Logged Out Successfully.'),
+//            ], status: Response::HTTP_OK);
+//        } catch (\Throwable $th) {
+//            return $this->response500($th);
+//        }
+//    }
+//}
