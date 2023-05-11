@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @package App\Http\Controllers\Api
  */
 
-class AuthController extends Controller
+class AuthController extends APIController
 {
     /**
      * @var UserService
@@ -76,12 +76,27 @@ class AuthController extends Controller
         }
     }
 
+//    public function logoutUser(Request $request): JsonResponse
+//    {
+//        if (PersonalAccessToken::findToken($request->bearerToken())->forceDelete()) {
+//            return response()->json(['success' => true]);
+//        }
+//        return response()->json(['success' => false]);
+//    }
+
     public function logoutUser(Request $request): JsonResponse
     {
-        if (PersonalAccessToken::findToken($request->bearerToken())->forceDelete()) {
-            return response()->json(['success' => true]);
+        try {
+
+            PersonalAccessToken::findToken($request->bearerToken())->delete();
+            return response()->json([
+                'status'  => true,
+                'message' => __(key: 'User Logged Out Successfully.'),
+            ], status: Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return $this->response500($th);
         }
-        return response()->json(['success' => false]);
     }
+
 
 }
