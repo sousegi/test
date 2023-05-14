@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use App\Traits\DropZoneTrait;
-use App\Traits\Uploadable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -62,6 +61,7 @@ class Article extends Model
         'title',
         'content',
         'image',
+        'user_id',
     ];
 
     /**
@@ -119,4 +119,13 @@ class Article extends Model
     {
         return json_encode($value, JSON_UNESCAPED_UNICODE);
     }
+
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
 }

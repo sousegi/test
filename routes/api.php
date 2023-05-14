@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/auth/logout', [AuthController::class, 'logoutUser']);
-Route::get('/articles', [ArticleController::class, 'show']);
-Route::get('/article/{id}', [ArticleController::class, 'article']);
-Route::post('/article/create', [ArticleController::class, 'store']);
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/auth/register', [AuthController::class, 'register']);
+    Route::post('/auth/logout', [AuthController::class, 'logoutUser']);
+    Route::get('/articles', [ArticleController::class, 'show']);
+    Route::get('/article/{id}', [ArticleController::class, 'article']);
+    Route::post('/article/create', [ArticleController::class, 'store']);
+    Route::get('/myarticles', [ArticleController::class, 'myArticles']);
 });

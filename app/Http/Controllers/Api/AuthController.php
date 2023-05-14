@@ -57,7 +57,7 @@ class AuthController extends APIController
         return response()->json(['token' => $token], 201);
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',

@@ -3,14 +3,18 @@
 namespace App\Services;
 
 use App\Contracts\Service;
+use App\Http\Resources\ArticlesCollection;
 use App\Models\Article;
 use App\Models\User;
 use App\Traits\DropZoneTrait;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use TypeError;
 
 /**
@@ -67,7 +71,7 @@ class ArticleService implements Service
      */
     public function find(int $id): Model
     {
-        return $this->builder()->where('id', $id)->firstOrFail();
+        return $this->builder()->with('user')->where('id', $id)->firstOrFail();
     }
 
     /**
@@ -147,17 +151,45 @@ class ArticleService implements Service
     }
 
     /**
-     * @param  array  $data
-     * @param  User  $user
-     *
-     * @return Article
+     * @param User $user
+     * @return Builder[]|Collection|\Illuminate\Support\Collection
      */
-
-    public function addArticleData(User $user, $request): Article
+    public function getMyArticles(User $user): Collection|\Illuminate\Support\Collection|array
     {
-        $article = $this->model->fill($data);
-        $article->save();
-
-        return $article;
+        return $this->builder()
+            ->get()
+            ->where('user_id', $user->id);
     }
+
+    /**
+     * @param User $user
+     * @param $request
+     * @return mixed
+     */
+    public function createArticle(User $user, $request): mixed
+    {
+        try {
+            DB::beginTransaction();
+
+            $article = new Article();
+
+            $article['title'] = $request['title'];
+            $article['user_id'] = $user['id'];
+            $article['content'] = $request['content'];
+            $article->save();
+
+            $builder = $this->builder()->find($article->id);
+
+            DB::commit();
+
+            return (new ArticlesCollection($builder))->resolve();
+        } catch (ModelNotFoundException $e) {
+            return false;
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+
 }

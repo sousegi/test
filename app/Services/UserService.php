@@ -62,7 +62,7 @@ class UserService implements Service
      */
     public function find(int $id): Model
     {
-        return $this->builder()->where('id', $id)->firstOrFail();
+        return $this->builder()->with('articles')->where('id', $id)->firstOrFail();
     }
 
     /**

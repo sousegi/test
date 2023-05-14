@@ -3,8 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Uploadable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
@@ -124,5 +123,13 @@ class User extends Authenticatable
         'password',
         'rememberToken',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function articles(): HasMany
+    {
+        return $this->hasMany(Article::class, 'user_id', 'id');
+    }
 
 }
