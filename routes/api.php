@@ -21,6 +21,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logoutUser']);
 Route::get('/articles', [ArticleController::class, 'show']);
 Route::get('/article/{id}', [ArticleController::class, 'article']);
+Route::post('/article/create', [ArticleController::class, 'store']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

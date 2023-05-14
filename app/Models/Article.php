@@ -58,7 +58,7 @@ class Article extends Model
      */
     protected $fillable = [
         // Write down the fields that will be assignable
-         'published',
+        'published',
         'title',
         'content',
         'image',

@@ -9,7 +9,7 @@ use App\Models\Article;
 use App\Services\ArticleService;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Throwable;
+use Illuminate\Http\Request;
 
 
 class ArticleController extends APIController
@@ -58,4 +58,26 @@ class ArticleController extends APIController
         }
     }
 
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function store(Request $request): JsonResponse
+    {
+        try {
+
+            $data = $request->all();
+
+//            $this->articleService->addArticleData(data: $data, user: $user);
+            $article = new Article($data);
+            $article->save();
+
+            return $this->response200();
+
+        } catch (\Throwable $th) {
+            return $this->response500($th);
+        }
+
+    }
 }

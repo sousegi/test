@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\Service;
 use App\Models\Article;
+use App\Models\User;
 use App\Traits\DropZoneTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -145,4 +146,18 @@ class ArticleService implements Service
             });
     }
 
+    /**
+     * @param  array  $data
+     * @param  User  $user
+     *
+     * @return Article
+     */
+
+    public function addArticleData(User $user, $request): Article
+    {
+        $article = $this->model->fill($data);
+        $article->save();
+
+        return $article;
+    }
 }
