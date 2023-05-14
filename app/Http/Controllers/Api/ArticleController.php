@@ -26,11 +26,19 @@ class ArticleController extends APIController
     }
 
     /**
+     * @param Request $request
      * @return JsonResponse
      */
-    public function show(): JsonResponse
+    public function show(Request $request): JsonResponse
     {
         try {
+
+            $user = $request->user();
+
+            if (!$user->count()) {
+                return response()->json(['message' => 'Unauthenticated.'], 403);
+            }
+
             $collection = $this->articleService->getAllArticles();
             if (!$collection->count()) {
                 return response()->json(['message' => 'Empty Articles'], 422);
