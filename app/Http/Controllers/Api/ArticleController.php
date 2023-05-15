@@ -71,7 +71,7 @@ class ArticleController extends APIController
             $user = $request->user();
 
             if (!$user->count()) {
-                return response()->json(['message' => 'Unauthenticated.'], 403);
+                return response()->json(['message' => 'Unauthenticated.'], 401);
             }
 
             $this->articleService->createArticle(user: $user, request: $request);
