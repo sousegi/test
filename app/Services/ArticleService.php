@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Request;
 use TypeError;
 
 /**
@@ -133,9 +132,7 @@ class ArticleService implements Service
     /**
      * @return Builder[]|Collection|\Illuminate\Support\Collection
      */
-    public function getAllArticles(User $user,
-                                   Request $request
-    ): Collection|\Illuminate\Support\Collection|array
+    public function getAllArticles(z): Collection|\Illuminate\Support\Collection|array
     {
         return $this->builder()
             ->select(['id', 'title', 'content', 'image', 'created_at'])

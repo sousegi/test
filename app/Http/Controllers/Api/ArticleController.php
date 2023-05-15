@@ -11,7 +11,6 @@ use App\Services\ArticleService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 
 class ArticleController extends APIController
@@ -29,19 +28,10 @@ class ArticleController extends APIController
     /**
      * @return JsonResponse
      */
-    public function show(Request $request): JsonResponse
+    public function show(): JsonResponse
     {
         try {
-
-            $user = $request->user();
-
-            if (!$user->count()) {
-                return response()->json(['message' => 'Unauthenticated.'],
-                    status: Response::HTTP_FORBIDDEN);
-            }
-
-
-            $collection = $this->articleService->getAllArticles(user: $user, request:  $request);
+            $collection = $this->articleService->getAllArticles();
             if (!$collection->count()) {
                 return response()->json(['message' => 'Empty Articles'], 422);
             }
