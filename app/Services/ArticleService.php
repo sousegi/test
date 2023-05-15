@@ -132,7 +132,7 @@ class ArticleService implements Service
     /**
      * @return Builder[]|Collection|\Illuminate\Support\Collection
      */
-    public function getAllArticles(z): Collection|\Illuminate\Support\Collection|array
+    public function getAllArticles(): Collection|\Illuminate\Support\Collection|array
     {
         return $this->builder()
             ->select(['id', 'title', 'content', 'image', 'created_at'])
