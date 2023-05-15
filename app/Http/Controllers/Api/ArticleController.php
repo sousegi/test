@@ -96,7 +96,7 @@ class ArticleController extends APIController
             $user = $request->user();
 
             if (is_null($user)) {
-                return response()->json(['message' => 'Unauthenticated.'], 403);
+                return response()->json(['message' => 'Unauthenticated.'], 401);
             }
 
             $collection = $this->articleService->getMyArticles(user: $user);

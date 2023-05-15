@@ -77,15 +77,6 @@ class AuthController extends APIController
         }
     }
 
-//    public function logoutUser(Request $request): JsonResponse
-//    {
-//        if (PersonalAccessToken::findToken($request->bearerToken())->forceDelete()) {
-//            return response()->json(['success' => true]);
-//        }
-//        return response()->json(['success' => false]);
-//    }
-//}
-
     public function logoutUser(Request $request): JsonResponse
     {
         try {

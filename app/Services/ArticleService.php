@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\Service;
+use App\Http\Resources\ArticleResource;
 use App\Http\Resources\ArticlesCollection;
 use App\Models\Article;
 use App\Models\User;
@@ -169,8 +170,6 @@ class ArticleService implements Service
     public function createArticle(User $user, $request): mixed
     {
         try {
-            DB::beginTransaction();
-
             $article = new Article();
 
             $article['title'] = $request['title'];
@@ -180,13 +179,10 @@ class ArticleService implements Service
 
             $builder = $this->builder()->find($article->id);
 
-            DB::commit();
-
-            return (new ArticlesCollection($builder))->resolve();
+            return (new ArticleResource($builder))->resolve();
         } catch (ModelNotFoundException $e) {
             return false;
         } catch (Exception $e) {
-            DB::rollback();
             throw $e;
         }
     }
