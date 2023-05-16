@@ -20,7 +20,7 @@ class ArticleResource extends JsonResource
             'title' =>$this->title,
             'content' =>$this->content,
             'image' => url('/storage/articles/'.$this->id.'/'.$this->image),
-            'created_at' => Carbon::parse($this->created_at)->format('d-m-Y'),
+            'created_at' => $this->created_at,
         ];
     }
 }
