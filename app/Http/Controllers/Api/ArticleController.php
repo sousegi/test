@@ -25,28 +25,22 @@ class ArticleController extends APIController
         $this->articleService = $articleService;
     }
 
-//    /**
-//     * @return JsonResponse
-//     */
-//    public function show(): JsonResponse
-//    {
-//        try {
-//            $collection = $this->articleService->getAllArticles();
-//            if (!$collection->count()) {
-//                return response()->json(['message' => 'Empty Articles'], 422);
-//            }
-//
-//
-//            return $this->response200((new ArticlesCollection(resource: $collection))->resolve());
-//        } catch (Exception $e) {
-//            return $this->response500($e);
-//        }
-//    }
-
+    /**
+     * @return JsonResponse
+     */
     public function show(): JsonResponse
     {
-        $articles = Article::all();
-        return response()->json($articles);
+        try {
+            $collection = $this->articleService->getAllArticles();
+            if (!$collection->count()) {
+                return response()->json(['message' => 'Empty Articles'], 422);
+            }
+
+
+            return $this->response200((new ArticlesCollection(resource: $collection))->resolve());
+        } catch (Exception $e) {
+            return $this->response500($e);
+        }
     }
 
     /**
