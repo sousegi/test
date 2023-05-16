@@ -26,24 +26,6 @@ class ArticleController extends APIController
     }
 
     /**
-     * @return JsonResponse
-     */
-    public function show(): JsonResponse
-    {
-        try {
-            $collection = $this->articleService->getAllArticles();
-            if (!$collection->count()) {
-                return response()->json(['message' => 'Empty Articles'], 422);
-            }
-
-
-            return $this->response200((new ArticlesCollection(resource: $collection))->resolve());
-        } catch (Exception $e) {
-            return $this->response500($e);
-        }
-    }
-
-    /**
      * @param $id
      * @return JsonResponse
      */
@@ -82,6 +64,24 @@ class ArticleController extends APIController
             return $this->response500($th);
         }
 
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getAllArticles(): JsonResponse
+    {
+        try {
+            $collection = $this->articleService->getAllArticles();
+            if (!$collection->count()) {
+                return response()->json(['message' => 'Empty Articles'], 422);
+            }
+
+
+            return $this->response200((new ArticlesCollection(resource: $collection))->resolve());
+        } catch (Exception $e) {
+            return $this->response500($e);
+        }
     }
 
     /**

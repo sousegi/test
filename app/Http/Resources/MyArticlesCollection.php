@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Article;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

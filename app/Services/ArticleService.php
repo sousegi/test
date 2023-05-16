@@ -4,18 +4,15 @@ namespace App\Services;
 
 use App\Contracts\Service;
 use App\Http\Resources\ArticleResource;
-use App\Http\Resources\ArticlesCollection;
 use App\Models\Article;
 use App\Models\User;
 use App\Traits\DropZoneTrait;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
 use TypeError;
 
 /**
@@ -153,21 +150,22 @@ class ArticleService implements Service
 
     /**
      * @param User $user
-     * @return Builder[]|Collection|\Illuminate\Support\Collection
+     * @return Collection
      */
-    public function getMyArticles(User $user): Collection|\Illuminate\Support\Collection|array
+    public function getMyArticles(User $user): Collection
     {
         return $this->builder()
-            ->get()
-            ->where('user_id', $user->id);
+            ->where('user_id', $user->id)
+            ->get();
     }
 
     /**
      * @param User $user
      * @param $request
-     * @return mixed
+     * @return array|false
+     * @throws Exception
      */
-    public function createArticle(User $user, $request): mixed
+    public function createArticle(User $user, $request)
     {
         try {
             $article = new Article();
