@@ -145,7 +145,7 @@ class ArticleService implements Service
                     'title' => $articles->title,
                     'content' => $articles->content,
                     'image' => url('/storage/articles/'.$articles->id.'/'.$articles->image),
-                    'created_at' => Carbon::parse($articles->created_at)->format('d-m-Y'),
+                    'created_at' => $articles->created_at,
 
                 ];
             });
