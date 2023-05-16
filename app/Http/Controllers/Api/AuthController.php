@@ -71,8 +71,7 @@ class AuthController extends APIController
 
         if (Auth::attempt($credentials)) {
             $token = Auth::user()->createToken('api_token')->plainTextToken;
-            $user = Auth::user();
-            return response()->json(['token' => $token, 'user' => $user], 200);
+            return response()->json(['token' => $token], 200);
         } else {
             return response()->json(['error' => 'Invalid email or password'], 401);
         }
