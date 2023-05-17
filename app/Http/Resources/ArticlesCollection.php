@@ -10,7 +10,7 @@ class ArticlesCollection extends ResourceCollection
 {
     /**
      * @param $request
-     * @return array|Arrayable|JsonSerializable
+     * @return array|JsonSerializable|Arrayable
      */
     public function toArray($request): array|JsonSerializable|Arrayable
     {
