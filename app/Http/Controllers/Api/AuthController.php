@@ -56,10 +56,6 @@ class AuthController extends APIController
         return response()->json(['token' => $token], 201);
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function login(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
