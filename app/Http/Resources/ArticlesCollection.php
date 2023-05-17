@@ -13,7 +13,7 @@ class ArticlesCollection extends ResourceCollection
      */
     public function toArray($request): array|\JsonSerializable|Arrayable
     {
-        return ['data' => $this->collection->map(function($query) {
+        return $this->collection->map(function($query) {
 
             return [
                 'id' => $query['id'],
@@ -22,6 +22,6 @@ class ArticlesCollection extends ResourceCollection
                 'image' => $query['image'],
                 'created_at' => $query['created_at']
             ];
-        })];
+        });
     }
 }
