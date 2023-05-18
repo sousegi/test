@@ -23,7 +23,6 @@ Route::get('/articles', [ArticleController::class, 'getAllArticles']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/myarticles', [ArticleController::class, 'myArticles']);
-    Route::get('/articles', [ArticleController::class, 'getAllArticles']);
     Route::post('/auth/logout', [AuthController::class, 'logoutUser']);
     Route::get('/article/{id}', [ArticleController::class, 'article']);
     Route::post('/article/create', [ArticleController::class, 'store']);
