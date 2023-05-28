@@ -95,10 +95,6 @@ class ArticleController extends APIController
 
             $user = $request->user();
             $collection = $this->articleService->getMyArticles(user: $user);
-            if (!$collection->count()) {
-                return response()->json(['message' => 'Empty Articles'], 422);
-            }
-
 
             return $this->response200((new MyArticlesCollection(resource: $collection))->resolve());
         } catch (Exception $e) {
